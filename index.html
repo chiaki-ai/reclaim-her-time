@@ -8,10 +8,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    #countdown-timer, #countdown-timer-2 {
+      font-size: 2em;
+      font-weight: bold;
+      color: #ff0000;
+      text-align: center;
+      margin: 20px 0;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>「“妻”になった瞬間、私の時間は“他人のもの”になった──」</h1>
+    <div id="countdown-timer"></div>
     <p>その呪い、30分で壊せるよ。</p>
     <a class="btn" href="https://tips.jp/u/yadori1124/a/eiU675WY/d/dac">“誰かのための時間”から、卒業しませんか？</a>
   </header>
@@ -124,6 +134,10 @@
 
     <section>
         <h2>購入リンク</h2>
+        <div id="countdown-timer-2"></div>
+        <p class="text-center"><strong>【期間限定】この価格でのご提供は、あとわずかです。</strong><br>
+        あなたの人生を変えるきっかけ、見送らないでください。<br>
+        正直に言います。あなたに行動してほしい。後悔してほしくないんです。</p>
         <ul>
           <li><a href="https://tips.jp/u/yadori1124/a/eiU675WY/d/dac">Tips（匿名・カード・アフィリエイト対応）</a></li>
           <li><a href="https://note.com/yadori2022_08_01/n/n2713f9f8870d">note（アカウント保有者向け）</a></li>
@@ -134,11 +148,48 @@
   <div class="cta-section">
       <h2>たった298円で、誰にも邪魔されない“30分”があなたのものになる。</h2>
       <p>家族に優しくする前に、自分に優しくする時間、買いませんか？</p>
+      <p class="text-center"><strong>片足を2塁ベースにつけたまま、3塁へは進めません。</strong><br>人間には「現状維持バイアス」というものがあって、変化を恐れ、今のままでいようとする本能があります。<br>「明日やろう」「もう少し考えてから」…その気持ち、痛いほどわかります。でも、その“明日”は、永遠に来ないかもしれません。<br>今の生活を守りながら、新しい自分に変わることなんてできない。どこかで、えいっと一歩、踏み出すしかないんです。</p>
       <a class="btn" href="https://tips.jp/u/yadori1124/a/eiU675WY/d/dac">今日くらい、“自分のため”に298円、使っていいよ。</a>
   </div>
 
   <footer>
-    <p>© 2025 ヤドリ｜“妻の時間”を取り戻す講座</p>
+    <p>© 2025 ヤドリ｜
+      “妻の時間”を取り戻す講座</p>
   </footer>
+  <script>
+    (function() {
+      const countdownElements = [document.getElementById('countdown-timer'), document.getElementById('countdown-timer-2')];
+      const countdownTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+      let endTime = localStorage.getItem('countdownEndTime');
+
+      if (!endTime || isNaN(endTime)) {
+        endTime = new Date().getTime() + countdownTime;
+        localStorage.setItem('countdownEndTime', endTime);
+      }
+
+      const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = endTime - now;
+
+        if (distance < 0) {
+          clearInterval(timer);
+          countdownElements.forEach(el => {
+            if (el) el.innerHTML = "受付は終了しました";
+          });
+          localStorage.removeItem('countdownEndTime');
+          return;
+        }
+
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const timerString = `【残り時間：${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}】`;
+        countdownElements.forEach(el => {
+            if (el) el.innerHTML = timerString;
+        });
+      }, 1000);
+    })();
+  </script>
 </body>
 </html>
