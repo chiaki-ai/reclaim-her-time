@@ -160,12 +160,7 @@
     (function() {
       const countdownElements = [document.getElementById('countdown-timer'), document.getElementById('countdown-timer-2')];
       const countdownTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-      let endTime = localStorage.getItem('countdownEndTime');
-
-      if (!endTime || isNaN(endTime)) {
-        endTime = new Date().getTime() + countdownTime;
-        localStorage.setItem('countdownEndTime', endTime);
-      }
+      const endTime = new Date().getTime() + countdownTime;
 
       const timer = setInterval(() => {
         const now = new Date().getTime();
@@ -176,7 +171,6 @@
           countdownElements.forEach(el => {
             if (el) el.innerHTML = "受付は終了しました";
           });
-          localStorage.removeItem('countdownEndTime');
           return;
         }
 
